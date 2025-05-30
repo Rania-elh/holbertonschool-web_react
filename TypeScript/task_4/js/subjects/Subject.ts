@@ -1,17 +1,14 @@
-namespace Subjects {
-	export class Subject {
-		// teacher implements Teacher interface
-		private _teacher?: Teacher;
+import { Teacher } from "./Teacher";
 
-		// Setter to set teacher attribute
-		public setTeacher(teacher: Teacher) {
-			this._teacher = teacher;
-		}
+export class Subject {
+	private _teacher!: Teacher;
 
-		// Optional getter to access teacher if needed
-		public getTeacher(): Teacher | undefined {
-			return this._teacher;
-		}
+	setTeacher(teacher: Teacher) {
+		this._teacher = teacher;
+	}
+
+	get teacher(): Teacher {
+		return this._teacher;
 	}
 }
 

@@ -1,10 +1,8 @@
-/// <reference path="./js/crud.d.ts" />
-
 // Import types from interface.ts
-import { RowID, RowElement } from './js/interface';
+import { RowID, RowElement } from './interface';
 
 // Import everything from crud.js as CRUD
-import * as CRUD from './js/crud.js';
+import * as CRUD from './crud.js';
 
 // Create an object 'row' with type RowElement
 const row: RowElement = {
