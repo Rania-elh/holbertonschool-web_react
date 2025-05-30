@@ -1,14 +1,14 @@
-import { Teacher } from "./Teacher";
+import { Teacher } from './Teacher';
 
 export class Subject {
-	private _teacher!: Teacher;
+	protected teacher!: Teacher;
 
-	setTeacher(teacher: Teacher) {
-		this._teacher = teacher;
+	setTeacher(teacher: Teacher): void {
+		this.teacher = teacher;
 	}
 
-	get teacher(): Teacher {
-		return this._teacher;
+	getTeacher(): Teacher {
+		return this.teacher;
 	}
 }
 

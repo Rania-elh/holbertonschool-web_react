@@ -1,5 +1,5 @@
-import { Subject } from "./Subject";
-import { Teacher } from "./Teacher";
+import { Subject } from './Subject';
+import { Teacher } from './Teacher';
 
 export class Java extends Subject {
 	getRequirements(): string {
@@ -7,10 +7,11 @@ export class Java extends Subject {
 	}
 
 	getAvailableTeacher(): string {
-		if (!this.teacher || !this.teacher.experienceTeachingJava || this.teacher.experienceTeachingJava <= 0) {
+		const teacher = this.getTeacher();
+		if (!teacher || !teacher.experienceTeachingJava || teacher.experienceTeachingJava <= 0) {
 			return 'No available teacher';
 		}
-		return `Available Teacher: ${this.teacher.firstName}`;
+		return `Available Teacher: ${teacher.firstName}`;
 	}
 }
 

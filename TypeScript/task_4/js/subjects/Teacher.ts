@@ -1,8 +1,8 @@
 export interface Teacher {
-	firstName: string;
-	lastName: string;
-	experienceTeachingC?: number;
-	experienceTeachingReact?: number;
-	experienceTeachingJava?: number;
+  firstName: string;
+  lastName: string;
+  experienceTeachingC?: number;
+  experienceTeachingJava?: number;
+  experienceTeachingReact?: number;
 }
 

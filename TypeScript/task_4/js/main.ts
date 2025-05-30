@@ -1,44 +1,44 @@
-import { Subjects } from "./subjects/Teacher";
 import { Cpp } from "./subjects/Cpp";
-import { React } from "./subjects/React";
 import { Java } from "./subjects/Java";
+import { React } from "./subjects/React";
+import { Teacher } from "./subjects/Teacher";
 
-// Création de quelques enseignants
-const cppTeacher: Subjects.Teacher = {
+// Définition du prof
+const cppTeacher: Teacher = {
 	firstName: "John",
 	lastName: "Doe",
-	experienceTeachingC: 5,
+	experienceTeachingC: 10
 };
 
-const reactTeacher: Subjects.Teacher = {
-	firstName: "Jane",
+const javaTeacher: Teacher = {
+	firstName: "Alice",
 	lastName: "Smith",
-	experienceTeachingReact: 0,
+	experienceTeachingJava: 5
 };
 
-const javaTeacher: Subjects.Teacher = {
-	firstName: "Mary",
-	lastName: "Johnson",
-	experienceTeachingJava: 3,
+const reactTeacher: Teacher = {
+	firstName: "Bob",
+	lastName: "Brown",
+	experienceTeachingReact: 2
 };
 
-// Création des instances de classes
+// Création des instances
 const cppCourse = new Cpp();
-cppCourse.teacher = cppTeacher;
-
-const reactCourse = new React();
-reactCourse.teacher = reactTeacher;
+cppCourse.setTeacher(cppTeacher);
 
 const javaCourse = new Java();
-javaCourse.teacher = javaTeacher;
+javaCourse.setTeacher(javaTeacher);
+
+const reactCourse = new React();
+reactCourse.setTeacher(reactTeacher);
 
 // Tests
-console.log(cppCourse.getRequirements()); // Here is the list of requirements for Cpp
-console.log(cppCourse.getAvailableTeacher()); // Available Teacher: John
+console.log("Cpp:", cppCourse.getRequirements());
+console.log("Cpp:", cppCourse.getAvailableTeacher());
 
-console.log(reactCourse.getRequirements()); // Here is the list of requirements for React
-console.log(reactCourse.getAvailableTeacher()); // No available teacher
+console.log("Java:", javaCourse.getRequirements());
+console.log("Java:", javaCourse.getAvailableTeacher());
 
-console.log(javaCourse.getRequirements()); // Here is the list of requirements for Java
-console.log(javaCourse.getAvailableTeacher()); // Available Teacher: Mary
+console.log("React:", reactCourse.getRequirements());
+console.log("React:", reactCourse.getAvailableTeacher());
 
