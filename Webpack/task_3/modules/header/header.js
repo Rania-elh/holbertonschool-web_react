@@ -1,5 +1,4 @@
 import './header.css';
-
 import $ from 'jquery';
 
 $(() => {

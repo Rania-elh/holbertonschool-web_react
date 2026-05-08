@@ -21,5 +21,3 @@ $(() => {
   $button.on('click', _.debounce(updateCounter, 500));
 });
 
-export default updateCounter;
-

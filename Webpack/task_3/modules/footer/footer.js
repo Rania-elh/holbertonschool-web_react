@@ -1,5 +1,4 @@
 import './footer.css';
-
 import $ from 'jquery';
 
 $(() => {

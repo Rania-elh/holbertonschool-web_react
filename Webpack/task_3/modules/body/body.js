@@ -1,5 +1,4 @@
 import './body.css';
-
 import $ from 'jquery';
 import _ from 'lodash';
 
@@ -12,13 +11,11 @@ function updateCounter() {
 
 $(() => {
   $('body').append('<p>Dashboard data for the students</p>');
-
   const $button = $('<button>Click here to get started</button>');
+  const $count = $("<p id='count'></p>");
   $('body').append($button);
-  $('body').append("<p id='count'></p>");
+  $('body').append($count);
 
   $button.on('click', _.debounce(updateCounter, 500));
 });
-
-export default updateCounter;
 

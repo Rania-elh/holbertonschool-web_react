@@ -26,7 +26,7 @@ eval("{\n\n// Bundlers are able to synchronously require an ESM module from a Co
   \**********************/
 (__unused_webpack_module, __unused_webpack_exports, __webpack_require__) {
 
-eval("{const $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/wrappers/jquery.bundler-require-wrapper.js\");\r\n\r\n$(\"body\").append(\"<p>Holberton Dashboard</p>\");\r\n$(\"body\").append(\"<p>Dashboard data for the students</p>\");\r\n$(\"body\").append(\"<p>Copyright - Holberton School</p>\");\n\n//# sourceURL=webpack://task_0/./src/index.js?\n}");
+eval("{const $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/wrappers/jquery.bundler-require-wrapper.js\");\r\n\r\n$('body').append('<p>Holberton Dashboard</p>');\r\n$('body').append('<p>Dashboard data for the students</p>');\r\n$('body').append('<p>Copyright - Holberton School</p>');\r\n\r\n\n\n//# sourceURL=webpack://task_0/./src/index.js?\n}");
 
 /***/ },
 
