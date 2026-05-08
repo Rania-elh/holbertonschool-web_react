@@ -1,7 +1,7 @@
-require('./body.css');
+import './body.css';
 
-const $ = require('jquery');
-const _ = require('lodash');
+import $ from 'jquery';
+import _ from 'lodash';
 
 let count = 0;
 
@@ -20,5 +20,5 @@ $(() => {
   $button.on('click', _.debounce(updateCounter, 500));
 });
 
-module.exports = { updateCounter };
+export default updateCounter;
 

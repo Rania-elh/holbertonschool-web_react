@@ -1,6 +1,6 @@
-require('./header.css');
+import './header.css';
 
-const $ = require('jquery');
+import $ from 'jquery';
 
 $(() => {
   console.log('Init header');
