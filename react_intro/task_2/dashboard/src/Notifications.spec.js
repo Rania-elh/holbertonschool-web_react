@@ -19,12 +19,10 @@ test('renders a close button', () => {
   expect(screen.getByRole('button', { name: /close/i })).toBeInTheDocument();
 });
 
-test('logs a message when the close button is clicked', () => {
+test('logs "Close button has been clicked" when the close button is clicked', () => {
   const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
   render(<Notifications />);
   fireEvent.click(screen.getByRole('button', { name: /close/i }));
-  expect(consoleSpy).toHaveBeenCalledWith(
-    expect.stringMatching(/close button has been clicked|hello holbies/i),
-  );
+  expect(consoleSpy).toHaveBeenCalledWith('Close button has been clicked');
   consoleSpy.mockRestore();
 });
