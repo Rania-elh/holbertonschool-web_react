@@ -4,33 +4,20 @@ import {
   getLatestNotification,
 } from './utils';
 
-describe('utils', () => {
-  describe('getCurrentYear', () => {
-    test('returns the current year', () => {
-      const expectedYear = new Date().getFullYear();
-      expect(getCurrentYear()).toBe(expectedYear);
-    });
+test('getCurrentYear returns the current year', () => {
+  expect(getCurrentYear()).toBe(new Date().getFullYear());
+});
 
-    test('returns a number', () => {
-      expect(typeof getCurrentYear()).toBe('number');
-    });
-  });
+test('getFooterCopy returns Holberton School when isIndex is true', () => {
+  expect(getFooterCopy(true)).toBe('Holberton School');
+});
 
-  describe('getFooterCopy', () => {
-    test('returns "Holberton School" when isIndex is true', () => {
-      expect(getFooterCopy(true)).toBe('Holberton School');
-    });
+test('getFooterCopy returns Holberton School main dashboard when isIndex is false', () => {
+  expect(getFooterCopy(false)).toBe('Holberton School main dashboard');
+});
 
-    test('returns "Holberton School main dashboard" when isIndex is false', () => {
-      expect(getFooterCopy(false)).toBe('Holberton School main dashboard');
-    });
-  });
-
-  describe('getLatestNotification', () => {
-    test('returns the correct urgent notification string', () => {
-      expect(getLatestNotification()).toBe(
-        '<strong>Urgent requirement</strong> - complete by EOD',
-      );
-    });
-  });
+test('getLatestNotification returns the urgent notification string', () => {
+  expect(getLatestNotification()).toBe(
+    '<strong>Urgent requirement</strong> - complete by EOD',
+  );
 });
