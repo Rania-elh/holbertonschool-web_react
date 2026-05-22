@@ -7,7 +7,7 @@ function CourseListRow({
     if (textSecondCell === null) {
       return (
         <tr>
-          <th colSpan="2">{textFirstCell}</th>
+          <th colSpan={2}>{textFirstCell}</th>
         </tr>
       );
     }

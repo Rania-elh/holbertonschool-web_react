@@ -6,7 +6,7 @@ function NotificationItem({ type = 'default', html, value }) {
       <li
         data-notification-type={type}
         style={style}
-        dangerouslySetInnerHTML={{ __html: html }}
+        dangerouslySetInnerHTML={html}
       />
     );
   }

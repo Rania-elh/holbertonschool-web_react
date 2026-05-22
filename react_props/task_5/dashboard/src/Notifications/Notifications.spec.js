@@ -5,7 +5,7 @@ import { getLatestNotification } from '../utils/utils';
 const notifications = [
   { id: 1, type: 'default', value: 'New course available' },
   { id: 2, type: 'urgent', value: 'New resume available' },
-  { id: 3, type: 'urgent', html: getLatestNotification() },
+  { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
 ];
 
 describe('Notifications component', () => {
@@ -62,6 +62,7 @@ describe('Notifications component', () => {
       expect(items[0]).toHaveTextContent('New course available');
       expect(items[1]).toHaveTextContent('New resume available');
       expect(items[2].innerHTML).toBe(getLatestNotification());
+      expect(screen.getByText(/complete by EOD/i)).toBeInTheDocument();
     });
 
     test('logs "Close button has been clicked" when the close button is clicked', () => {
