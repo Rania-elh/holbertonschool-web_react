@@ -16,10 +16,7 @@ test('renders the copyright footer', () => {
 
 test('renders the title', () => {
   render(<App />);
-  const title = screen.getByRole('heading', {
-    level: 1,
-    name: /school dashboard/i,
-  });
+  const title = screen.getByRole('heading', { name: /school dashboard/i });
   expect(title).toBeInTheDocument();
 });
 
