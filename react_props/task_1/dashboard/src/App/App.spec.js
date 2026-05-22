@@ -25,6 +25,6 @@ test('renders the title', () => {
 
 test('renders the logo', () => {
   render(<App />);
-  const logo = screen.getByAltText(/logo/i);
+  const logo = screen.getByAltText(/holberton logo/i);
   expect(logo).toBeInTheDocument();
 });
