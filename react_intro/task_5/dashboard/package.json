@@ -1,6 +1,7 @@
 {
   "name": "dashboard",
   "private": true,
+  "type": "module",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
@@ -47,7 +48,7 @@
     },
     "transform": {
       "^.+\\.(js|jsx)$": "babel-jest",
-      "^.+\\.(jpg|jpeg|png|gif|svg|ico)$": "<rootDir>/fileTransformer.js"
+      "^.+\\.(jpg|jpeg|png|gif|svg|ico)$": "<rootDir>/fileTransformer.cjs"
     }
   }
 }
