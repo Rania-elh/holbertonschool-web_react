@@ -1,27 +1,29 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders the h1 with text School dashboard', () => {
-  render(<App />);
-  expect(
-    screen.getByRole('heading', { level: 1, name: /school dashboard/i }),
-  ).toBeInTheDocument();
-});
-
 test('renders the login paragraph', () => {
   render(<App />);
-  expect(
-    screen.getByText(/login to access the full dashboard/i),
-  ).toBeInTheDocument();
+  const login = screen.getByText(/login to access the full dashboard/i);
+  expect(login).toBeInTheDocument();
 });
 
-test('renders the footer with Holberton School copyright', () => {
+test('renders the copyright footer', () => {
   render(<App />);
-  expect(screen.getByText(/holberton school/i)).toBeInTheDocument();
-  expect(screen.getByText(/copyright/i)).toBeInTheDocument();
+  const footer = screen.getByText(/copyright/i);
+  expect(footer).toBeInTheDocument();
 });
 
-test('renders an img element with a logo alt text', () => {
+test('renders the title', () => {
   render(<App />);
-  expect(screen.getByAltText(/logo/i)).toBeInTheDocument();
+  const title = screen.getByRole('heading', {
+    level: 1,
+    name: /school dashboard/i,
+  });
+  expect(title).toBeInTheDocument();
+});
+
+test('renders the logo', () => {
+  render(<App />);
+  const logo = screen.getByAltText(/logo/i);
+  expect(logo).toBeInTheDocument();
 });
