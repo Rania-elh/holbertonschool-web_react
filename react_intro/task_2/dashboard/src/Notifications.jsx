@@ -1,5 +1,5 @@
 import './Notifications.css';
-import closeIcon from './assets/close-icon.png';
+import closeIcon from './assets/close-button.png';
 import { getLatestNotification } from './utils';
 
 function Notifications() {
@@ -20,7 +20,7 @@ function Notifications() {
           padding: 0,
         }}
       >
-        <img src={closeIcon} alt="close icon" width="12" height="12" />
+        <img src={closeIcon} alt="close" width="12" height="12" />
       </button>
       <ul>
         <li data-priority="default">New course available</li>
