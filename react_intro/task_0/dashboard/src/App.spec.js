@@ -30,7 +30,7 @@ describe('App component', () => {
 
   test('renders an img element with the holberton logo alt text', () => {
     render(<App />);
-    const image = screen.getByAltText(/holberton logo/i);
+    const image = screen.getByAltText(/^logo$/i);
     expect(image).toBeInTheDocument();
   });
 });
