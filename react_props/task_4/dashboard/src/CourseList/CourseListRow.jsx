@@ -1,6 +1,9 @@
+import PropTypes from 'prop-types';
+import './CourseList.css';
+
 function CourseListRow({
   isHeader = false,
-  textFirstCell = '',
+  textFirstCell,
   textSecondCell = null,
 }) {
   if (isHeader) {
@@ -26,5 +29,11 @@ function CourseListRow({
     </tr>
   );
 }
+
+CourseListRow.propTypes = {
+  isHeader: PropTypes.bool,
+  textFirstCell: PropTypes.string.isRequired,
+  textSecondCell: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+};
 
 export default CourseListRow;

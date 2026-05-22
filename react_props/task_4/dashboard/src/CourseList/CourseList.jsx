@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import './CourseList.css';
 import CourseListRow from './CourseListRow';
 
@@ -23,7 +24,8 @@ function CourseList({ courses = [] }) {
             <CourseListRow
               key={course.id}
               textFirstCell={course.name}
-              textSecondCell={course.credit}
+              textSecondCell={`${course.credit}`}
+              isHeader={false}
             />
           ))
         )}
@@ -31,5 +33,15 @@ function CourseList({ courses = [] }) {
     </table>
   );
 }
+
+CourseList.propTypes = {
+  courses: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+      credit: PropTypes.number.isRequired,
+    })
+  ),
+};
 
 export default CourseList;
