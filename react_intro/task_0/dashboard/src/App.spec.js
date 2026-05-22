@@ -9,7 +9,8 @@ test('renders the login paragraph', () => {
 
 test('renders the copyright footer', () => {
   render(<App />);
-  const footer = screen.getByText(/copyright/i);
+  const footerRegex = /copyright \d{4}.*holberton school/i;
+  const footer = screen.getByText(footerRegex);
   expect(footer).toBeInTheDocument();
 });
 
