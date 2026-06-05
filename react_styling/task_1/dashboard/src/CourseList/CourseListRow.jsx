@@ -3,30 +3,32 @@ function CourseListRow({
   textFirstCell = '',
   textSecondCell = null,
 }) {
-  const rowClass = isHeader ? 'bg-table-header/66' : 'bg-table-rows/45';
+  const bgClass = isHeader ? 'bg-table-header/66' : 'bg-table-rows/45';
+  const thClass = `border border-gray-400 ${bgClass}`;
+  const tdClass = `border border-gray-400 pl-2 ${bgClass}`;
 
   if (isHeader) {
     if (textSecondCell === null) {
       return (
-        <tr className={rowClass}>
-          <th colSpan={2} className="border border-gray-400">
+        <tr>
+          <th colSpan={2} className={thClass}>
             {textFirstCell}
           </th>
         </tr>
       );
     }
     return (
-      <tr className={rowClass}>
-        <th className="border border-gray-400">{textFirstCell}</th>
-        <th className="border border-gray-400">{textSecondCell}</th>
+      <tr>
+        <th className={thClass}>{textFirstCell}</th>
+        <th className={thClass}>{textSecondCell}</th>
       </tr>
     );
   }
 
   return (
-    <tr className={rowClass}>
-      <td className="border border-gray-400 pl-2">{textFirstCell}</td>
-      <td className="border border-gray-400 pl-2">{textSecondCell}</td>
+    <tr>
+      <td className={tdClass}>{textFirstCell}</td>
+      <td className={tdClass}>{textSecondCell}</td>
     </tr>
   );
 }
