@@ -46,14 +46,14 @@ class App extends Component {
   }
 
   render() {
-    const { isLoggedIn = false, displayDrawer = true } = this.props;
+    const { isLoggedIn = false } = this.props;
 
     return (
       <div className="App flex min-h-screen flex-col">
         <div className="root-notifications">
           <Notifications
             notifications={notificationsList}
-            displayDrawer={displayDrawer}
+            displayDrawer={true}
           />
         </div>
         <Header />

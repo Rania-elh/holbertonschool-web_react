@@ -22,14 +22,16 @@ class Notifications extends Component {
 
     return (
       <Fragment>
-        <div className="notification-title text-right">Your notifications</div>
+        <div className="notification-title text-right cursor-pointer bg-white px-2 py-1 text-base text-[#1a1a1a]">
+          Your notifications
+        </div>
         {displayDrawer && (
-          <div className="notification-items relative ml-auto w-1/4 border-2 border-dashed border-(--main-color) p-1.5">
+          <div className="notification-items relative ml-auto w-1/4 min-w-[320px] border-2 border-dashed border-(--main-color) bg-white p-1.5">
             {notifications.length === 0 ? (
               <p>No new notification for now</p>
             ) : (
               <Fragment>
-                <p>Here is the list of notifications</p>
+                <p className="mb-3 text-base text-[#1a1a1a]">Here is the list of notifications</p>
                 <button
                   type="button"
                   aria-label="Close"
@@ -46,7 +48,7 @@ class Notifications extends Component {
                 >
                   <img src={closeIcon} alt="close" width="12" height="12" />
                 </button>
-                <ul>
+                <ul className="m-0 list-disc pl-5">
                   {notifications.map(({ id, type, value, html }) => (
                     <NotificationItem
                       key={id}
