@@ -26,7 +26,7 @@ const coursesList = [
   { id: 3, name: 'React', credit: 40 },
 ];
 
-export default function App() {
+const App = () => {
   const [displayDrawer, setDisplayDrawer] = useState(true);
   const [user, setUser] = useState(defaultUser);
   const [notifications, setNotifications] = useState(notificationsList);
@@ -117,3 +117,5 @@ export default function App() {
     </newContext.Provider>
   );
 }
+
+export default App;

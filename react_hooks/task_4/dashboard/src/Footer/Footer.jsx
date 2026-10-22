@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { getCurrentYear, getFooterCopy } from '../utils/utils';
 import newContext from '../Context/context';
 
-function Footer() {
+const Footer = () => {
   const { user } = useContext(newContext);
 
   return (

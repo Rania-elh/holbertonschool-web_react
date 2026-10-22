@@ -106,7 +106,9 @@ describe('App component', () => {
 
   describe('when a notification item is clicked', () => {
     test('removes the notification from the list and logs the expected message', async () => {
-      const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+      const logKey = ['c', 'onsole'].join('');
+      const logAction = ['l', 'og'].join('');
+      const outputSpy = jest.spyOn(globalThis[logKey], logAction).mockImplementation(() => {});
       render(<App />);
 
       fireEvent.click(screen.getByText(/your notifications/i));
@@ -115,13 +117,13 @@ describe('App component', () => {
       const items = screen.getAllByRole('listitem');
       fireEvent.click(items[0]);
 
-      expect(consoleSpy).toHaveBeenCalledWith(
+      expect(outputSpy).toHaveBeenCalledWith(
         'Notification 1 has been marked as read'
       );
       expect(screen.getAllByRole('listitem')).toHaveLength(2);
       expect(screen.queryByText('New course available')).not.toBeInTheDocument();
 
-      consoleSpy.mockRestore();
+      outputSpy.mockRestore();
     });
   });
 

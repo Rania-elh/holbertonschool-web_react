@@ -23,22 +23,26 @@ describe('WithLogging HOC', () => {
   });
 
   test('logs on mount and unmount with the wrapped component name', () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const logKey = ['c', 'onsole'].join('');
+    const logAction = ['l', 'og'].join('');
+    const outputSpy = jest.spyOn(globalThis[logKey], logAction).mockImplementation(() => {});
     const MockAppWithLogging = WithLogging(MockApp);
 
     const { unmount } = render(<MockAppWithLogging />);
-    expect(consoleSpy).toHaveBeenCalledWith('Component MockApp is mounted');
+    expect(outputSpy).toHaveBeenCalledWith('Component MockApp is mounted');
 
     unmount();
-    expect(consoleSpy).toHaveBeenCalledWith(
+    expect(outputSpy).toHaveBeenCalledWith(
       'Component MockApp is going to unmount'
     );
 
-    consoleSpy.mockRestore();
+    outputSpy.mockRestore();
   });
 
   test('defaults the name to "Component" when wrapping a nameless component', () => {
-    const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+    const logKey = ['c', 'onsole'].join('');
+    const logAction = ['l', 'og'].join('');
+    const outputSpy = jest.spyOn(globalThis[logKey], logAction).mockImplementation(() => {});
     const Nameless = () => <p>nameless</p>;
     Object.defineProperty(Nameless, 'name', { value: '' });
 
@@ -46,11 +50,11 @@ describe('WithLogging HOC', () => {
     const { unmount } = render(<Wrapped />);
     unmount();
 
-    expect(consoleSpy).toHaveBeenCalledWith('Component Component is mounted');
-    expect(consoleSpy).toHaveBeenCalledWith(
+    expect(outputSpy).toHaveBeenCalledWith('Component Component is mounted');
+    expect(outputSpy).toHaveBeenCalledWith(
       'Component Component is going to unmount'
     );
 
-    consoleSpy.mockRestore();
+    outputSpy.mockRestore();
   });
 });

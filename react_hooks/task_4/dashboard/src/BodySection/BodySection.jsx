@@ -1,6 +1,6 @@
-import { Component } from 'react';
+import React from 'react';
 
-class BodySection extends Component {
+class BodySection extends React.Component {
   render() {
     const { title, children } = this.props;
 

@@ -1,7 +1,7 @@
 
 import { memo } from 'react';
 
-function NotificationItem(props) {
+const NotificationItem = (props) => {
   const {
     id = null,
     type = 'default',

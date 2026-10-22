@@ -1,8 +1,9 @@
-function CourseListRow({
-  isHeader = false,
-  textFirstCell = '',
-  textSecondCell = null,
-}) {
+const CourseListRow = (props) => {
+  const {
+    isHeader = false,
+    textFirstCell = '',
+    textSecondCell = null,
+  } = props;
   if (isHeader) {
     if (textSecondCell === null) {
       return (

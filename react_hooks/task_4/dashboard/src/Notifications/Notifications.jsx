@@ -4,7 +4,7 @@ import closeIcon from '../assets/close-button.png';
 import NotificationItem from './NotificationItem';
 import { memo, Fragment } from 'react';
 
-function Notifications(props) {
+const Notifications = (props) => {
   const {
     notifications = [],
     displayDrawer = false,

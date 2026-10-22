@@ -3,7 +3,7 @@ import logo from '../assets/holberton-logo.jpg';
 import { useContext } from 'react';
 import newContext from '../Context/context';
 
-function Header() {
+const Header = () => {
   const context = useContext(newContext);
   const { user, logOut } = context;
 

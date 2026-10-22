@@ -1,8 +1,8 @@
-import { Component } from 'react';
+import React from 'react';
 import './BodySectionWithMarginBottom.css';
 import BodySection from './BodySection';
 
-class BodySectionWithMarginBottom extends Component {
+class BodySectionWithMarginBottom extends React.Component {
   render() {
     const { title, children } = this.props;
 

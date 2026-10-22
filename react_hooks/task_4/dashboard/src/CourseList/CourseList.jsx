@@ -1,7 +1,8 @@
 import './CourseList.css';
 import CourseListRow from './CourseListRow';
 
-function CourseList({ courses = [] }) {
+const CourseList = (props) => {
+  const { courses = [] } = props;
   return (
     <table id="CourseList">
       <thead>

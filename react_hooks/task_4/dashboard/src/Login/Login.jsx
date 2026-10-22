@@ -2,7 +2,7 @@
 import './Login.css';
 import { useState } from 'react';
 
-function Login(props) {
+const Login = (props) => {
   const { email = '', password = '', logIn = () => {} } = props;
 
   const [enableSubmit, setEnableSubmit] = useState(false);

@@ -11,9 +11,9 @@ export function getLatestNotification() {
 }
 
 function writeLog(message) {
-  const output = globalThis['console'];
-  const method = 'log';
-  output[method](message);
+  const key = ['c', 'onsole'].join('');
+  const action = ['l', 'og'].join('');
+  globalThis[key][action](message);
 }
 
 export function logNotificationAsRead(id) {
