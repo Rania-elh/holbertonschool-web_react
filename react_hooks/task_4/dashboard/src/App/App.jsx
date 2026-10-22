@@ -8,7 +8,7 @@ import CourseList from '../CourseList/CourseList';
 import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import WithLogging from '../HOC/WithLogging';
-import { getLatestNotification } from '../utils/utils';
+import { getLatestNotification, logNotificationAsRead } from '../utils/utils';
 import newContext, { defaultUser } from '../Context/context';
 
 const CourseListWithLogging = WithLogging(CourseList);
@@ -26,7 +26,7 @@ const coursesList = [
   { id: 3, name: 'React', credit: 40 },
 ];
 
-function App() {
+export default function App() {
   const [displayDrawer, setDisplayDrawer] = useState(true);
   const [user, setUser] = useState(defaultUser);
   const [notifications, setNotifications] = useState(notificationsList);
@@ -56,7 +56,7 @@ function App() {
   }, []);
 
   const markNotificationAsRead = useCallback((id) => {
-    console['log'](`Notification ${id} has been marked as read`);
+    logNotificationAsRead(id);
     setNotifications((prevNotifications) =>
       prevNotifications.filter((notification) => notification.id !== id)
     );
@@ -117,5 +117,3 @@ function App() {
     </newContext.Provider>
   );
 }
-
-export default App;

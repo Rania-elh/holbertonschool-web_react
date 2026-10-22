@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { logComponentMounted, logComponentUnmounted } from '../utils/utils';
 
 function getDisplayName(WrappedComponent) {
   return WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -9,11 +10,11 @@ function WithLogging(WrappedComponent) {
 
   class WithLoggingComponent extends Component {
     componentDidMount() {
-      console['log'](`Component ${name} is mounted`);
+      logComponentMounted(name);
     }
 
     componentWillUnmount() {
-      console['log'](`Component ${name} is going to unmount`);
+      logComponentUnmounted(name);
     }
 
     render() {
