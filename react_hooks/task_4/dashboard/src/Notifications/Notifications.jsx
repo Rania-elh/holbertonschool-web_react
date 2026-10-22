@@ -72,12 +72,4 @@ function Notifications(props) {
   );
 }
 
-Notifications.defaultProps = {
-  notifications: [],
-  displayDrawer: false,
-  handleDisplayDrawer: () => {},
-  handleHideDrawer: () => {},
-  markNotificationAsRead: () => {},
-};
-
 export default memo(Notifications);

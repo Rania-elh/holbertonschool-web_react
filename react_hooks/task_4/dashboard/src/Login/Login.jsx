@@ -2,8 +2,7 @@
 import './Login.css';
 import { useState } from 'react';
 
-function Login(props) {
-  const { email = '', password = '', logIn } = props;
+function Login({ email = '', password = '', logIn = () => {} }) {
 
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [formData, setFormData] = useState({
@@ -76,11 +75,5 @@ function Login(props) {
     </div>
   );
 }
-
-Login.defaultProps = {
-  email: '',
-  password: '',
-  logIn: () => {},
-};
 
 export default Login;

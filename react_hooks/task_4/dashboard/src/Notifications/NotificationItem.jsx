@@ -1,14 +1,13 @@
 
 import { memo } from 'react';
 
-function NotificationItem(props) {
-  const {
-    id,
-    type = 'default',
-    html,
-    value,
-    markAsRead,
-  } = props;
+function NotificationItem({
+  id = null,
+  type = 'default',
+  html = null,
+  value = '',
+  markAsRead = () => {},
+}) {
 
   const style = {
     color: type === 'urgent' ? 'red' : 'blue',
@@ -41,13 +40,5 @@ function NotificationItem(props) {
     </li>
   );
 }
-
-NotificationItem.defaultProps = {
-  id: null,
-  type: 'default',
-  html: null,
-  value: '',
-  markAsRead: () => {},
-};
 
 export default memo(NotificationItem);
