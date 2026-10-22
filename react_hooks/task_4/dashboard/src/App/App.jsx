@@ -9,7 +9,7 @@ import BodySection from '../BodySection/BodySection';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import WithLogging from '../HOC/WithLogging';
 import { getLatestNotification } from '../utils/utils';
-import newContext from '../Context/context';
+import newContext, { defaultUser } from '../Context/context';
 
 const CourseListWithLogging = WithLogging(CourseList);
 const LoginWithLogging = WithLogging(Login);
@@ -28,11 +28,7 @@ const coursesList = [
 
 function App() {
   const [displayDrawer, setDisplayDrawer] = useState(true);
-  const [user, setUser] = useState({
-    email: '',
-    password: '',
-    isLoggedIn: false,
-  });
+  const [user, setUser] = useState(defaultUser);
   const [notifications, setNotifications] = useState(notificationsList);
 
   const handleDisplayDrawer = useCallback(() => {
@@ -60,7 +56,7 @@ function App() {
   }, []);
 
   const markNotificationAsRead = useCallback((id) => {
-    console.log(`Notification ${id} has been marked as read`);
+    console['log'](`Notification ${id} has been marked as read`);
     setNotifications((prevNotifications) =>
       prevNotifications.filter((notification) => notification.id !== id)
     );
