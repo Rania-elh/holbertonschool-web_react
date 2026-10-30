@@ -1,4 +1,4 @@
-import './CourseList.css';
+import '../../../styles/CourseList.css';
 import CourseListRow from './CourseListRow/CourseListRow';
 
 function CourseList({ courses = [] }) {

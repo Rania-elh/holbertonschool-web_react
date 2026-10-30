@@ -1,5 +1,5 @@
 import { Fragment, useReducer, useCallback, useEffect } from 'react';
-import './App.css';
+import '../styles/App.css';
 import Notifications from './components/Notifications/Notifications';
 import Header from './components/Header/Header';
 import Login from './pages/Login/Login';

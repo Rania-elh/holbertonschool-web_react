@@ -1,4 +1,4 @@
-import './Notifications.css';
+import '../../../styles/Notifications.css';
 import closeIcon from '../../assets/close-icon.png';
 import NotificationItem from '../NotificationItem/NotificationItem';
 import { memo, Fragment } from 'react';

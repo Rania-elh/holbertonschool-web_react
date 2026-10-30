@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import './BodySectionWithMarginBottom.css';
+import '../../../styles/BodySectionWithMarginBottom.css';
 import BodySection from '../BodySection/BodySection';
 
 class BodySectionWithMarginBottom extends Component {

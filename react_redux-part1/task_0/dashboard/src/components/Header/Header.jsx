@@ -1,4 +1,4 @@
-import './Header.css';
+import '../../../styles/Header.css';
 import logo from '../../assets/holberton-logo.jpg';
 
 function Header({ user, logOut }) {
