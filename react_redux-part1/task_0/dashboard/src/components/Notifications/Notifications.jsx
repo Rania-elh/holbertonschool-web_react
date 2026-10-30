@@ -93,8 +93,11 @@ function NotificationsConnected() {
 
 function Notifications(props) {
   const redux = useContext(ReactReduxContext);
+  const hasProps = props.notifications !== undefined
+    || props.displayDrawer !== undefined
+    || props.markNotificationAsRead !== undefined;
 
-  if (!redux) {
+  if (hasProps || !redux) {
     return <NotificationsView {...props} />;
   }
 

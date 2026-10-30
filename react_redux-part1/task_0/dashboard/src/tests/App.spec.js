@@ -1,11 +1,15 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import mockAxios from 'jest-mock-axios';
+import axios from 'axios';
 import App from '../App';
 import store from '../app/store';
 import { logout } from '../features/auth/authSlice';
 
-jest.mock('axios');
+jest.mock('axios', () => {
+  const get = jest.fn();
+  const client = { get };
+  return { __esModule: true, default: client };
+});
 
 const notifications = [
   { id: 1, type: 'default', value: 'New course available' },
@@ -24,13 +28,10 @@ const courses = [
 ];
 
 async function renderApp() {
-  const view = render(<App />);
+  let view;
 
   await act(async () => {
-    mockAxios.mockResponseFor(
-      { url: 'http://localhost:5173/notifications.json' },
-      { data: notifications }
-    );
+    view = render(<App />);
   });
 
   return view;
@@ -40,19 +41,24 @@ async function logInUser(user) {
   await user.type(screen.getByLabelText(/email/i), 'test@example.com');
   await user.type(screen.getByLabelText(/password/i), 'password123');
   await user.click(screen.getByRole('button', { name: /ok/i }));
-
-  await act(async () => {
-    mockAxios.mockResponseFor(
-      { url: 'http://localhost:5173/courses.json' },
-      { data: courses }
-    );
-  });
 }
 
 describe('App component', () => {
+  beforeEach(() => {
+    axios.get.mockImplementation((url) => {
+      if (String(url).includes('notifications.json')) {
+        return Promise.resolve({ data: notifications });
+      }
+      if (String(url).includes('courses.json')) {
+        return Promise.resolve({ data: courses });
+      }
+      return Promise.reject(new Error(String(url)));
+    });
+  });
+
   afterEach(() => {
     store.dispatch(logout());
-    mockAxios.reset();
+    axios.get.mockReset();
   });
 
   test('renders the title', async () => {
@@ -90,7 +96,7 @@ describe('App component', () => {
   test('fetches notifications from the API and renders them', async () => {
     await renderApp();
 
-    expect(mockAxios.get).toHaveBeenCalledWith(
+    expect(axios.get).toHaveBeenCalledWith(
       'http://localhost:5173/notifications.json'
     );
     expect(screen.getByText('New course available')).toBeInTheDocument();

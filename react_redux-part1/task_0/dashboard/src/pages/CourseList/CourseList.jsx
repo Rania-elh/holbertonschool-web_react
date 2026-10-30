@@ -42,7 +42,7 @@ function CourseListConnected() {
 function CourseList({ courses }) {
   const redux = useContext(ReactReduxContext);
 
-  if (!redux) {
+  if (courses !== undefined || !redux) {
     return <CourseListView courses={courses} />;
   }
 

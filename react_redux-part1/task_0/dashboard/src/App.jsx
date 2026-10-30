@@ -1,5 +1,5 @@
-import { Fragment, useEffect } from 'react';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Fragment, useContext, useEffect } from 'react';
+import { Provider, ReactReduxContext, useDispatch, useSelector } from 'react-redux';
 import '../styles/App.css';
 import Notifications from './components/Notifications/Notifications';
 import Header from './components/Header/Header';
@@ -74,6 +74,12 @@ function AppContent() {
 }
 
 function App() {
+  const parentStore = useContext(ReactReduxContext);
+
+  if (parentStore) {
+    return <AppContent />;
+  }
+
   return (
     <Provider store={store}>
       <AppContent />
