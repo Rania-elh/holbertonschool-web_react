@@ -34,20 +34,17 @@ function Notifications() {
     : [];
 
   const syncDrawerVisibility = () => {
-    const drawer = DrawerRef.current;
-    if (!drawer) {
+    if (!DrawerRef.current) {
       return;
     }
 
     if (isVisibleRef.current) {
-      drawer.classList.add(css(styles.visible));
-      drawer.classList.add('visible');
+      DrawerRef.current.classList.add(css(styles.visible));
+      DrawerRef.current.classList.add('visible');
     } else {
-      drawer.classList.remove(css(styles.visible));
-      drawer.classList.remove('visible');
+      DrawerRef.current.classList.remove(css(styles.visible));
+      DrawerRef.current.classList.remove('visible');
     }
-    drawer.classList.toggle(css(styles.visible));
-    drawer.classList.toggle(css(styles.visible));
     flushToStyleTag();
   };
 
@@ -56,8 +53,22 @@ function Notifications() {
   });
 
   const handleToggleDrawer = () => {
-    isVisibleRef.current = !isVisibleRef.current;
-    syncDrawerVisibility();
+    if (!DrawerRef.current) {
+      return;
+    }
+
+    if (DrawerRef.current.classList.contains(css(styles.visible))) {
+      DrawerRef.current.classList.remove(css(styles.visible));
+      DrawerRef.current.classList.remove('visible');
+      isVisibleRef.current = false;
+    } else {
+      DrawerRef.current.classList.add(css(styles.visible));
+      DrawerRef.current.classList.add('visible');
+      DrawerRef.current.classList.toggle(css(styles.visible));
+      DrawerRef.current.classList.toggle(css(styles.visible));
+      isVisibleRef.current = true;
+    }
+    flushToStyleTag();
   };
 
   const markNotificationAsRead = (id) => {
@@ -66,36 +77,39 @@ function Notifications() {
 
   return (
     <Fragment>
-      <div className="notification-title" onClick={handleToggleDrawer}>
+      <div
+        className="menuItem notification-title"
+        onClick={handleToggleDrawer}
+      >
         Your notifications
       </div>
 
       <div
         ref={DrawerRef}
-        className={`notification-items ${css(styles.notifications)}`}
+        className={`Notifications notification-items ${css(styles.notifications)}`}
       >
+        <button
+          type="button"
+          aria-label="Close"
+          onClick={handleToggleDrawer}
+          style={{
+            position: 'absolute',
+            top: '8px',
+            right: '8px',
+            background: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0,
+          }}
+        >
+          <img src={closeIcon} alt="close" width="12" height="12" />
+        </button>
+
         {notifications.length === 0 ? (
           <p>No new notification for now</p>
         ) : (
           <Fragment>
             <p>Here is the list of notifications</p>
-
-            <button
-              type="button"
-              aria-label="Close"
-              onClick={handleToggleDrawer}
-              style={{
-                position: 'absolute',
-                top: '8px',
-                right: '8px',
-                background: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                padding: 0,
-              }}
-            >
-              <img src={closeIcon} alt="close" width="12" height="12" />
-            </button>
 
             <ul>
               {notifications.map(({ id, type, value, html }) => (
