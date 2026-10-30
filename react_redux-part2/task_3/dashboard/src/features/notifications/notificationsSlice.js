@@ -8,31 +8,32 @@ const ENDPOINTS = {
 };
 
 export function toUnreadNotifications(payload) {
-  if (!Array.isArray(payload)) {
+  const notifications = Array.isArray(payload)
+    ? payload
+    : payload?.notifications ?? payload?.data ?? [];
+
+  if (!Array.isArray(notifications)) {
     return [];
   }
 
-  return payload
+  return notifications
     .filter((notification) => {
       if (notification?.context) {
         return notification.context.isRead === false;
       }
-      return notification?.isRead === false;
+      return notification?.isRead !== true;
     })
     .map((notification) => {
-      if (notification?.context) {
-        return {
-          id: notification.id,
-          type: notification.context.type,
-          isRead: notification.context.isRead,
-          value: notification.context.value,
-        };
+      if (!notification?.context) {
+        return notification;
       }
+
       return {
+        ...notification,
         id: notification.id,
-        type: notification.type,
-        isRead: notification.isRead,
-        value: notification.value,
+        type: notification.context.type,
+        isRead: notification.context.isRead,
+        value: notification.context.value,
       };
     });
 }
@@ -67,7 +68,15 @@ const notificationsSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchNotifications.fulfilled, (state, action) => {
-        state.notifications = toUnreadNotifications(action.payload);
+        const unread = toUnreadNotifications(action.payload).filter(
+          (notification) => {
+            if (notification?.context) {
+              return notification.context.isRead === false;
+            }
+            return notification?.isRead !== true;
+          }
+        );
+        state.notifications = unread;
         state.loading = false;
       })
       .addCase(fetchNotifications.rejected, (state) => {

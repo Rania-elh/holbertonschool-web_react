@@ -42,20 +42,14 @@ const apiNotifications = [
   },
 ];
 
-const fetchedNotifications = [
-  {
-    id: '1',
-    type: 'default',
-    isRead: false,
-    value: 'New course available',
-  },
-  {
-    id: '2',
-    type: 'urgent',
-    isRead: false,
-    value: 'New resume available',
-  },
-];
+const fetchedNotifications = apiNotifications
+  .filter((notification) => notification.context.isRead === false)
+  .map((notification) => ({
+    ...notification,
+    type: notification.context.type,
+    isRead: notification.context.isRead,
+    value: notification.context.value,
+  }));
 
 describe('notificationsSlice', () => {
   test('returns the correct initial state by default', () => {

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, css } from 'aphrodite';
 import { markNotificationAsRead as markNotificationAsReadAction } from '../../features/notifications/notificationsSlice.js';
 import { getFilteredNotifications } from '../../features/selectors/notificationSelector.js';
-import './Notifications.css';
-import closeIcon from '../../assets/close-icon.png';
 import NotificationItem from '../NotificationItem/NotificationItem.jsx';
+
+const closeIcon = '/close-icon.png';
 
 const styles = StyleSheet.create({
   notifications: {
@@ -60,6 +60,13 @@ function Notifications() {
     dispatch(markNotificationAsReadAction(id));
   };
 
+  const visibleNotifications = filteredNotifications.filter((notification) => {
+    if (notification?.context) {
+      return notification.context.isRead === false;
+    }
+    return notification?.isRead !== true;
+  });
+
   return (
     <Fragment>
       <div className="notification-title" onClick={handleToggleDrawer}>
@@ -75,7 +82,7 @@ function Notifications() {
         ) : (
           <Fragment>
             <p>
-              {filteredNotifications.length === 0
+              {visibleNotifications.length === 0
                 ? 'No new notification for now'
                 : 'Here is the list of notifications'}
             </p>
@@ -116,14 +123,14 @@ function Notifications() {
               </button>
             </div>
 
-            {filteredNotifications.length > 0 && (
+            {visibleNotifications.length > 0 && (
               <ul>
-                {filteredNotifications.map(({ id, type, value }) => (
+                {visibleNotifications.map((notification) => (
                   <NotificationItem
-                    key={id}
-                    id={id}
-                    type={type}
-                    value={value}
+                    key={notification.id}
+                    id={notification.id}
+                    type={notification.context?.type ?? notification.type}
+                    value={notification.value ?? notification.context?.value}
                     markAsRead={markNotificationAsRead}
                   />
                 ))}

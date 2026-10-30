@@ -1,6 +1,7 @@
 import { Fragment, useContext, useEffect } from 'react';
 import { Provider, ReactReduxContext, useDispatch, useSelector } from 'react-redux';
 import './App.css';
+import './components/Notifications/Notifications.css';
 import store from './app/store.js';
 import Notifications from './components/Notifications/Notifications.jsx';
 import Header from './components/Header/Header.jsx';
