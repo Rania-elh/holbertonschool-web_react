@@ -1,6 +1,36 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import axios from 'axios';
 import App from '../App';
+
+jest.mock('axios');
+
+const notifications = [
+  { id: 1, type: 'default', value: 'New course available' },
+  { id: 2, type: 'urgent', value: 'New resume available' },
+  {
+    id: 3,
+    type: 'urgent',
+    html: { __html: '<strong>Urgent requirement</strong> - complete by EOD' },
+  },
+];
+
+const courses = [
+  { id: 1, name: 'ES6', credit: 60 },
+  { id: 2, name: 'Webpack', credit: 20 },
+  { id: 3, name: 'React', credit: 40 },
+];
+
+async function renderApp() {
+  let view;
+  await act(async () => {
+    view = render(<App />);
+  });
+  await act(async () => {
+    await Promise.resolve();
+  });
+  return view;
+}
 
 async function logInUser(user) {
   await user.type(screen.getByLabelText(/email/i), 'test@example.com');
@@ -9,8 +39,24 @@ async function logInUser(user) {
 }
 
 describe('App component', () => {
-  test('renders the title', () => {
-    render(<App />);
+  beforeEach(() => {
+    axios.get.mockImplementation((url) => {
+      if (String(url).includes('notifications.json')) {
+        return Promise.resolve({ data: notifications });
+      }
+      if (String(url).includes('courses.json')) {
+        return Promise.resolve({ data: courses });
+      }
+      return Promise.resolve({ data: [] });
+    });
+  });
+
+  afterEach(() => {
+    axios.get.mockReset();
+  });
+
+  test('renders the title', async () => {
+    await renderApp();
     const title = screen.getByRole('heading', {
       level: 1,
       name: /school dashboard/i,
@@ -18,21 +64,21 @@ describe('App component', () => {
     expect(title).toBeInTheDocument();
   });
 
-  test('renders the logo', () => {
-    render(<App />);
+  test('renders the logo', async () => {
+    await renderApp();
     const logo = screen.getByAltText(/logo/i);
     expect(logo).toBeInTheDocument();
   });
 
-  test('renders the copyright footer', () => {
-    render(<App />);
+  test('renders the copyright footer', async () => {
+    await renderApp();
     const footerRegex = /copyright \d{4}.*holberton school/i;
     const footer = screen.getByText(footerRegex);
     expect(footer).toBeInTheDocument();
   });
 
-  test('renders the "News from the School" section by default', () => {
-    render(<App />);
+  test('renders the "News from the School" section by default', async () => {
+    await renderApp();
     expect(
       screen.getByRole('heading', { name: /news from the school/i })
     ).toBeInTheDocument();
@@ -42,8 +88,8 @@ describe('App component', () => {
   });
 
   describe('when the user is not logged in', () => {
-    test('renders the Login form', () => {
-      render(<App />);
+    test('renders the Login form', async () => {
+      await renderApp();
       expect(
         screen.getByText(/login to access the full dashboard/i)
       ).toBeInTheDocument();
@@ -51,13 +97,13 @@ describe('App component', () => {
       expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     });
 
-    test('does not render the CourseList table', () => {
-      const { container } = render(<App />);
+    test('does not render the CourseList table', async () => {
+      const { container } = await renderApp();
       expect(container.querySelector('#CourseList')).toBeNull();
     });
 
-    test('does not render the logoutSection', () => {
-      const { container } = render(<App />);
+    test('does not render the logoutSection', async () => {
+      const { container } = await renderApp();
       expect(container.querySelector('#logoutSection')).toBeNull();
     });
   });
@@ -65,7 +111,7 @@ describe('App component', () => {
   describe('when the user is logged in', () => {
     test('renders the CourseList table', async () => {
       const user = userEvent.setup();
-      const { container } = render(<App />);
+      const { container } = await renderApp();
 
       await logInUser(user);
 
@@ -75,7 +121,7 @@ describe('App component', () => {
 
     test('does not render the Login form', async () => {
       const user = userEvent.setup();
-      render(<App />);
+      await renderApp();
 
       await logInUser(user);
 
@@ -86,7 +132,7 @@ describe('App component', () => {
 
     test('renders the logoutSection with the user email', async () => {
       const user = userEvent.setup();
-      const { container } = render(<App />);
+      const { container } = await renderApp();
 
       await logInUser(user);
 
@@ -96,7 +142,7 @@ describe('App component', () => {
 
     test('renders the "Contact us" link in the Footer', async () => {
       const user = userEvent.setup();
-      render(<App />);
+      await renderApp();
 
       await logInUser(user);
 
@@ -107,10 +153,10 @@ describe('App component', () => {
   describe('when a notification item is clicked', () => {
     test('removes the notification from the list and logs the expected message', async () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-      render(<App />);
+      await renderApp();
 
       fireEvent.click(screen.getByText(/your notifications/i));
-      expect(screen.getAllByRole('listitem')).toHaveLength(3);
+      expect(await screen.findAllByRole('listitem')).toHaveLength(3);
 
       const items = screen.getAllByRole('listitem');
       fireEvent.click(items[0]);
@@ -128,7 +174,7 @@ describe('App component', () => {
   describe('when the user logs out', () => {
     test('updates the interface when clicking the logout link in the Header', async () => {
       const user = userEvent.setup();
-      const { container } = render(<App />);
+      const { container } = await renderApp();
 
       await logInUser(user);
 
@@ -147,7 +193,7 @@ describe('App component', () => {
     test('updates the interface when ctrl + h keys are pressed', async () => {
       const alertSpy = jest.spyOn(window, 'alert').mockImplementation(() => {});
       const user = userEvent.setup();
-      const { container } = render(<App />);
+      const { container } = await renderApp();
 
       await logInUser(user);
 
