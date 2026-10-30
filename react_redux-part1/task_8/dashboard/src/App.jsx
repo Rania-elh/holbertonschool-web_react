@@ -1,16 +1,16 @@
 import { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import Notifications from './components/Notifications/Notifications';
-import Header from './components/Header/Header';
-import Login from './pages/Login/Login';
-import Footer from './components/Footer/Footer';
-import CourseList from './pages/CourseList/CourseList';
-import BodySection from './components/BodySection/BodySection';
-import BodySectionWithMarginBottom from './components/BodySectionWithMarginBottom/BodySectionWithMarginBottom';
-import WithLogging from './components/HOC/WithLogging';
-import { fetchNotifications } from './features/notifications/notificationsSlice';
-import { fetchCourses } from './features/courses/coursesSlice';
+import Notifications from './components/Notifications/Notifications.jsx';
+import Header from './components/Header/Header.jsx';
+import Login from './pages/Login/Login.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import CourseList from './pages/CourseList/CourseList.jsx';
+import BodySection from './components/BodySection/BodySection.jsx';
+import BodySectionWithMarginBottom from './components/BodySectionWithMarginBottom/BodySectionWithMarginBottom.jsx';
+import WithLogging from './components/HOC/WithLogging.jsx';
+import { fetchNotifications } from './features/notifications/notificationsSlice.js';
+import { fetchCourses } from './features/courses/coursesSlice.js';
 
 const CourseListWithLogging = WithLogging(CourseList);
 const LoginWithLogging = WithLogging(Login);

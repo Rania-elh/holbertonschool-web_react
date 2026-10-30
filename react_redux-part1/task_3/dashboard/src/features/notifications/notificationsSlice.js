@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getLatestNotification } from '../../utils/utils';
+import { getLatestNotification } from '../../utils/utils.js';
 
 const API_BASE_URL = 'http://localhost:5173';
 

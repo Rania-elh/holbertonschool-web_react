@@ -4,10 +4,10 @@ import {
   hideDrawer,
   markNotificationAsRead as markNotificationAsReadAction,
   showDrawer,
-} from '../../features/notifications/notificationsSlice';
+} from '../../features/notifications/notificationsSlice.js';
 import './Notifications.css';
 import closeIcon from '../../assets/close-icon.png';
-import NotificationItem from '../NotificationItem/NotificationItem';
+import NotificationItem from '../NotificationItem/NotificationItem.jsx';
 
 function Notifications() {
   const dispatch = useDispatch();

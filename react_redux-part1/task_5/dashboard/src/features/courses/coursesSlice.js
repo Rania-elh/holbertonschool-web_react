@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { logout } from '../auth/authSlice';
+import { logout } from '../auth/authSlice.js';
 
 const API_BASE_URL = 'http://localhost:5173';
 

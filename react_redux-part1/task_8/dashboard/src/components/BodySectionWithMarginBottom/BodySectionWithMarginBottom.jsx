@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import './BodySectionWithMarginBottom.css';
-import BodySection from '../BodySection/BodySection';
+import BodySection from '../BodySection/BodySection.jsx';
 
 class BodySectionWithMarginBottom extends Component {
   render() {

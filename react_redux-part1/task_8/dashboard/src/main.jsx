@@ -5,8 +5,8 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import './main.css'
-import App from './App'
-import store from './app/store'
+import App from './App.jsx'
+import store from './app/store.js'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

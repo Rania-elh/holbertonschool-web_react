@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import './Footer.css';
-import { getCurrentYear, getFooterCopy } from '../../utils/utils';
+import { getCurrentYear, getFooterCopy } from '../../utils/utils.js';
 
 function Footer() {
   const user = useSelector((state) => state.auth.user);

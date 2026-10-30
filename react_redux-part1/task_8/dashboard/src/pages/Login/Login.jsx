@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
-import { login } from '../../features/auth/authSlice';
+import { login } from '../../features/auth/authSlice.js';
 import './Login.css';
-import useLogin from '../../hooks/useLogin';
+import useLogin from '../../hooks/useLogin.jsx';
 
 function Login() {
   const dispatch = useDispatch();

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import './CourseList.css';
-import CourseListRow from './CourseListRow/CourseListRow';
+import CourseListRow from './CourseListRow/CourseListRow.jsx';
 
 function CourseList() {
   const courses = useSelector((state) => state.courses.courses);
