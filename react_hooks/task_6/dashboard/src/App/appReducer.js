@@ -32,14 +32,7 @@ export const APP_ACTIONS = {
         };
   
       case APP_ACTIONS.LOGOUT:
-        return {
-          ...state,
-          user: {
-            email: '',
-            password: '',
-            isLoggedIn: false,
-          },
-        };
+        return initialState;
   
       case APP_ACTIONS.TOGGLE_DRAWER:
         return {
