@@ -97,7 +97,7 @@ describe('notificationsSlice', () => {
 
     const fulfilledState = notificationsReducer(pendingState, {
       type: fetchNotifications.fulfilled.type,
-      payload: fetchedNotifications,
+      payload: apiNotifications,
     });
 
     expect(fulfilledState.loading).toBe(false);

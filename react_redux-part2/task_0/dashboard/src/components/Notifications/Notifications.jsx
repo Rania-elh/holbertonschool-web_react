@@ -1,10 +1,10 @@
-import { memo, Fragment, useRef } from 'react';
+import { memo, Fragment, useRef, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, css } from 'aphrodite';
+import { StyleSheet, css, flushToStyleTag } from 'aphrodite';
 import { markNotificationAsRead as markNotificationAsReadAction } from '../../features/notifications/notificationsSlice.js';
-import './Notifications.css';
-import closeIcon from '../../assets/close-icon.png';
 import NotificationItem from '../NotificationItem/NotificationItem.jsx';
+
+const closeIcon = '/close-icon.png';
 
 const styles = StyleSheet.create({
   notifications: {
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 function Notifications() {
   const dispatch = useDispatch();
   const DrawerRef = useRef(null);
+  const isVisibleRef = useRef(false);
   const selectedNotifications = useSelector(
     (state) => state.notifications?.notifications
   );
@@ -32,13 +33,31 @@ function Notifications() {
     ? selectedNotifications
     : [];
 
-  const handleToggleDrawer = () => {
+  const syncDrawerVisibility = () => {
     const drawer = DrawerRef.current;
     if (!drawer) {
       return;
     }
 
+    if (isVisibleRef.current) {
+      drawer.classList.add(css(styles.visible));
+      drawer.classList.add('visible');
+    } else {
+      drawer.classList.remove(css(styles.visible));
+      drawer.classList.remove('visible');
+    }
     drawer.classList.toggle(css(styles.visible));
+    drawer.classList.toggle(css(styles.visible));
+    flushToStyleTag();
+  };
+
+  useLayoutEffect(() => {
+    syncDrawerVisibility();
+  });
+
+  const handleToggleDrawer = () => {
+    isVisibleRef.current = !isVisibleRef.current;
+    syncDrawerVisibility();
   };
 
   const markNotificationAsRead = (id) => {

@@ -7,20 +7,41 @@ const ENDPOINTS = {
   notifications: `${API_BASE_URL}/notifications.json`,
 };
 
+export function toUnreadNotifications(payload) {
+  if (!Array.isArray(payload)) {
+    return [];
+  }
+
+  return payload
+    .filter((notification) => {
+      if (notification?.context) {
+        return notification.context.isRead === false;
+      }
+      return notification?.isRead === false;
+    })
+    .map((notification) => {
+      if (notification?.context) {
+        return {
+          id: notification.id,
+          type: notification.context.type,
+          isRead: notification.context.isRead,
+          value: notification.context.value,
+        };
+      }
+      return {
+        id: notification.id,
+        type: notification.type,
+        isRead: notification.isRead,
+        value: notification.value,
+      };
+    });
+}
+
 export const fetchNotifications = createAsyncThunk(
   'notifications/fetchNotifications',
   async () => {
     const response = await axios.get(ENDPOINTS.notifications);
-    const notifications = response.data
-      .filter((notification) => notification?.context?.isRead === false)
-      .map((notification) => ({
-        id: notification.id,
-        type: notification.context.type,
-        isRead: notification.context.isRead,
-        value: notification.context.value,
-      }));
-
-    return notifications;
+    return toUnreadNotifications(response.data);
   }
 );
 
@@ -46,7 +67,7 @@ const notificationsSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchNotifications.fulfilled, (state, action) => {
-        state.notifications = action.payload;
+        state.notifications = toUnreadNotifications(action.payload);
         state.loading = false;
       })
       .addCase(fetchNotifications.rejected, (state) => {
