@@ -17,6 +17,18 @@ const LoginWithLogging = WithLogging(Login);
 
 const API_BASE_URL = 'http://localhost:5173';
 
+const notificationsList = [
+  { id: 1, type: 'default', value: 'New course available' },
+  { id: 2, type: 'urgent', value: 'New resume available' },
+  { id: 3, type: 'urgent', html: { __html: getLatestNotification() } },
+];
+
+const coursesList = [
+  { id: 1, name: 'ES6', credit: 60 },
+  { id: 2, name: 'Webpack', credit: 20 },
+  { id: 3, name: 'React', credit: 40 },
+];
+
 function App() {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
@@ -52,39 +64,54 @@ function App() {
   }, []);
 
   useEffect(() => {
+    dispatch({
+      type: APP_ACTIONS.SET_NOTIFICATIONS,
+      payload: notificationsList,
+    });
+    dispatch({
+      type: APP_ACTIONS.SET_COURSES,
+      payload: coursesList,
+    });
+
     let mounted = true;
 
-    axios.get(`${API_BASE_URL}/notifications.json`).then((response) => {
-      if (!mounted) {
-        return;
-      }
-
-      const notifications = response.data.map((notification) => {
-        if (notification.id === 3) {
-          return {
-            ...notification,
-            html: { __html: getLatestNotification() },
-          };
+    axios
+      .get(`${API_BASE_URL}/notifications.json`)
+      .then((response) => {
+        if (!mounted || !Array.isArray(response.data)) {
+          return;
         }
-        return notification;
-      });
 
-      dispatch({
-        type: APP_ACTIONS.SET_NOTIFICATIONS,
-        payload: notifications,
-      });
-    });
+        const notifications = response.data.map((notification) => {
+          if (notification.id === 3) {
+            return {
+              ...notification,
+              html: { __html: getLatestNotification() },
+            };
+          }
+          return notification;
+        });
 
-    axios.get(`${API_BASE_URL}/courses.json`).then((response) => {
-      if (!mounted) {
-        return;
-      }
+        dispatch({
+          type: APP_ACTIONS.SET_NOTIFICATIONS,
+          payload: notifications,
+        });
+      })
+      .catch(() => {});
 
-      dispatch({
-        type: APP_ACTIONS.SET_COURSES,
-        payload: response.data,
-      });
-    });
+    axios
+      .get(`${API_BASE_URL}/courses.json`)
+      .then((response) => {
+        if (!mounted || !Array.isArray(response.data)) {
+          return;
+        }
+
+        dispatch({
+          type: APP_ACTIONS.SET_COURSES,
+          payload: response.data,
+        });
+      })
+      .catch(() => {});
 
     return () => {
       mounted = false;
