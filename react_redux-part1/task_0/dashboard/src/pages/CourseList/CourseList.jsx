@@ -1,7 +1,9 @@
+import { useContext } from 'react';
+import { ReactReduxContext, useSelector } from 'react-redux';
 import '../../../styles/CourseList.css';
 import CourseListRow from './CourseListRow/CourseListRow';
 
-function CourseList({ courses = [] }) {
+function CourseListView({ courses = [] }) {
   return (
     <table id="CourseList">
       <thead>
@@ -30,6 +32,21 @@ function CourseList({ courses = [] }) {
       </tbody>
     </table>
   );
+}
+
+function CourseListConnected() {
+  const courses = useSelector((state) => state.courses.courses);
+  return <CourseListView courses={courses} />;
+}
+
+function CourseList({ courses }) {
+  const redux = useContext(ReactReduxContext);
+
+  if (!redux) {
+    return <CourseListView courses={courses} />;
+  }
+
+  return <CourseListConnected />;
 }
 
 export default CourseList;

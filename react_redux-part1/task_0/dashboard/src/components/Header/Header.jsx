@@ -1,7 +1,10 @@
+import { useContext } from 'react';
+import { ReactReduxContext, useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../features/auth/authSlice';
 import '../../../styles/Header.css';
 import logo from '../../assets/holberton-logo.jpg';
 
-function Header({ user, logOut }) {
+function HeaderView({ user, isLoggedIn, onLogout }) {
   return (
     <>
       <header className="App-header">
@@ -9,7 +12,7 @@ function Header({ user, logOut }) {
         <h1>School dashboard</h1>
       </header>
 
-      {user.isLoggedIn && (
+      {isLoggedIn && (
         <div id="logoutSection">
           Welcome{' '}
           {user.email}{' '}
@@ -18,7 +21,7 @@ function Header({ user, logOut }) {
             href="#"
             onClick={(event) => {
               event.preventDefault();
-              logOut();
+              onLogout();
             }}
           >
             logout
@@ -28,6 +31,36 @@ function Header({ user, logOut }) {
       )}
     </>
   );
+}
+
+function HeaderConnected() {
+  const user = useSelector((state) => state.auth.user);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+
+  return (
+    <HeaderView
+      user={user}
+      isLoggedIn={isLoggedIn}
+      onLogout={() => dispatch(logout())}
+    />
+  );
+}
+
+function Header({ user, logOut }) {
+  const redux = useContext(ReactReduxContext);
+
+  if (!redux) {
+    return (
+      <HeaderView
+        user={user}
+        isLoggedIn={Boolean(user && user.isLoggedIn)}
+        onLogout={logOut}
+      />
+    );
+  }
+
+  return <HeaderConnected />;
 }
 
 export default Header;

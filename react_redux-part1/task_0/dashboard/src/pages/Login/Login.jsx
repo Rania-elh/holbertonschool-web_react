@@ -1,7 +1,10 @@
+import { useContext } from 'react';
+import { ReactReduxContext, useDispatch } from 'react-redux';
+import { login } from '../../features/auth/authSlice';
 import '../../../styles/Login.css';
 import useLogin from '../../hooks/useLogin';
 
-function Login({ logIn }) {
+function LoginForm({ onLogin }) {
   const {
     email,
     password,
@@ -9,7 +12,7 @@ function Login({ logIn }) {
     handleChangeEmail,
     handleChangePassword,
     handleLogin,
-  } = useLogin(logIn);
+  } = useLogin(onLogin);
 
   return (
     <div className="Login">
@@ -42,6 +45,26 @@ function Login({ logIn }) {
       </form>
     </div>
   );
+}
+
+function LoginConnected() {
+  const dispatch = useDispatch();
+
+  const onLogin = (email, password) => {
+    dispatch(login({ email, password }));
+  };
+
+  return <LoginForm onLogin={onLogin} />;
+}
+
+function Login({ logIn }) {
+  const redux = useContext(ReactReduxContext);
+
+  if (!redux) {
+    return <LoginForm onLogin={logIn} />;
+  }
+
+  return <LoginConnected />;
 }
 
 export default Login;

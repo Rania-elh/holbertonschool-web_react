@@ -1,7 +1,9 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import axios from 'axios';
+import mockAxios from 'jest-mock-axios';
 import App from '../App';
+import store from '../app/store';
+import { logout } from '../features/auth/authSlice';
 
 jest.mock('axios');
 
@@ -22,13 +24,15 @@ const courses = [
 ];
 
 async function renderApp() {
-  let view;
+  const view = render(<App />);
+
   await act(async () => {
-    view = render(<App />);
+    mockAxios.mockResponseFor(
+      { url: 'http://localhost:5173/notifications.json' },
+      { data: notifications }
+    );
   });
-  await act(async () => {
-    await Promise.resolve();
-  });
+
   return view;
 }
 
@@ -36,23 +40,19 @@ async function logInUser(user) {
   await user.type(screen.getByLabelText(/email/i), 'test@example.com');
   await user.type(screen.getByLabelText(/password/i), 'password123');
   await user.click(screen.getByRole('button', { name: /ok/i }));
+
+  await act(async () => {
+    mockAxios.mockResponseFor(
+      { url: 'http://localhost:5173/courses.json' },
+      { data: courses }
+    );
+  });
 }
 
 describe('App component', () => {
-  beforeEach(() => {
-    axios.get.mockImplementation((url) => {
-      if (String(url).includes('notifications.json')) {
-        return Promise.resolve({ data: notifications });
-      }
-      if (String(url).includes('courses.json')) {
-        return Promise.resolve({ data: courses });
-      }
-      return Promise.resolve({ data: [] });
-    });
-  });
-
   afterEach(() => {
-    axios.get.mockReset();
+    store.dispatch(logout());
+    mockAxios.reset();
   });
 
   test('renders the title', async () => {
@@ -87,6 +87,17 @@ describe('App component', () => {
     ).toBeInTheDocument();
   });
 
+  test('fetches notifications from the API and renders them', async () => {
+    await renderApp();
+
+    expect(mockAxios.get).toHaveBeenCalledWith(
+      'http://localhost:5173/notifications.json'
+    );
+    expect(screen.getByText('New course available')).toBeInTheDocument();
+    expect(screen.getByText('New resume available')).toBeInTheDocument();
+    expect(screen.getByText(/complete by EOD/i)).toBeInTheDocument();
+  });
+
   describe('when the user is not logged in', () => {
     test('renders the Login form', async () => {
       await renderApp();
@@ -117,6 +128,9 @@ describe('App component', () => {
 
       const table = container.querySelector('table#CourseList');
       expect(table).toBeInTheDocument();
+      expect(screen.getByText('ES6')).toBeInTheDocument();
+      expect(screen.getByText('Webpack')).toBeInTheDocument();
+      expect(screen.getByText('React')).toBeInTheDocument();
     });
 
     test('does not render the Login form', async () => {
@@ -156,7 +170,7 @@ describe('App component', () => {
       await renderApp();
 
       fireEvent.click(screen.getByText(/your notifications/i));
-      expect(await screen.findAllByRole('listitem')).toHaveLength(3);
+      expect(screen.getAllByRole('listitem')).toHaveLength(3);
 
       const items = screen.getAllByRole('listitem');
       fireEvent.click(items[0]);

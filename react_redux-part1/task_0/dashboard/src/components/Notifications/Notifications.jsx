@@ -1,17 +1,21 @@
+import { memo, Fragment, useContext } from 'react';
+import { ReactReduxContext, useDispatch, useSelector } from 'react-redux';
+import {
+  hideDrawer,
+  markNotificationAsRead,
+  showDrawer,
+} from '../../features/notifications/notificationsSlice';
 import '../../../styles/Notifications.css';
 import closeIcon from '../../assets/close-icon.png';
 import NotificationItem from '../NotificationItem/NotificationItem';
-import { memo, Fragment } from 'react';
 
-function Notifications(props) {
-  const {
-    notifications = [],
-    displayDrawer = false,
-    handleDisplayDrawer = () => {},
-    handleHideDrawer = () => {},
-    markNotificationAsRead = () => {},
-  } = props;
-
+function NotificationsView({
+  notifications = [],
+  displayDrawer = false,
+  handleDisplayDrawer = () => {},
+  handleHideDrawer = () => {},
+  markNotificationAsRead = () => {},
+}) {
   return (
     <Fragment>
       <div
@@ -69,6 +73,32 @@ function Notifications(props) {
       )}
     </Fragment>
   );
+}
+
+function NotificationsConnected() {
+  const dispatch = useDispatch();
+  const notifications = useSelector((state) => state.notifications.notifications);
+  const displayDrawer = useSelector((state) => state.notifications.displayDrawer);
+
+  return (
+    <NotificationsView
+      notifications={notifications}
+      displayDrawer={displayDrawer}
+      handleDisplayDrawer={() => dispatch(showDrawer())}
+      handleHideDrawer={() => dispatch(hideDrawer())}
+      markNotificationAsRead={(id) => dispatch(markNotificationAsRead(id))}
+    />
+  );
+}
+
+function Notifications(props) {
+  const redux = useContext(ReactReduxContext);
+
+  if (!redux) {
+    return <NotificationsView {...props} />;
+  }
+
+  return <NotificationsConnected />;
 }
 
 export default memo(Notifications);
