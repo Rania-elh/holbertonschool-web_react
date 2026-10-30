@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import mockAxios from 'jest-mock-axios';
 import CourseList from './CourseList';
+
+jest.mock('axios', () => require('jest-mock-axios'));
 import coursesReducer, { fetchCourses } from '../../features/courses/coursesSlice';
 import { logout } from '../../features/auth/authSlice';
 

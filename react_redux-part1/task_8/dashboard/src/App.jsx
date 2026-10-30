@@ -1,6 +1,7 @@
-import { Fragment, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { Fragment, useContext, useEffect } from 'react';
+import { Provider, ReactReduxContext, useDispatch, useSelector } from 'react-redux';
 import './App.css';
+import store from './app/store.js';
 import Notifications from './components/Notifications/Notifications.jsx';
 import Header from './components/Header/Header.jsx';
 import Login from './pages/Login/Login.jsx';
@@ -15,7 +16,7 @@ import { fetchCourses } from './features/courses/coursesSlice.js';
 const CourseListWithLogging = WithLogging(CourseList);
 const LoginWithLogging = WithLogging(Login);
 
-function App() {
+function AppContent() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
@@ -56,4 +57,16 @@ function App() {
   );
 }
 
-export default App;
+export default function App() {
+  const reduxContext = useContext(ReactReduxContext);
+
+  if (!reduxContext) {
+    return (
+      <Provider store={store}>
+        <AppContent />
+      </Provider>
+    );
+  }
+
+  return <AppContent />;
+}

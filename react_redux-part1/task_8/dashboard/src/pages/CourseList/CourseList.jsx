@@ -3,7 +3,8 @@ import './CourseList.css';
 import CourseListRow from './CourseListRow/CourseListRow.jsx';
 
 function CourseList() {
-  const courses = useSelector((state) => state.courses.courses);
+  const selectedCourses = useSelector((state) => state.courses?.courses);
+  const courses = Array.isArray(selectedCourses) ? selectedCourses : [];
 
   return (
     <table id="CourseList">

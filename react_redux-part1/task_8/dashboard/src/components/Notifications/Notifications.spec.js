@@ -3,6 +3,8 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import mockAxios from 'jest-mock-axios';
 import Notifications from './Notifications';
+
+jest.mock('axios', () => require('jest-mock-axios'));
 import notificationsReducer, {
   fetchNotifications,
 } from '../../features/notifications/notificationsSlice';

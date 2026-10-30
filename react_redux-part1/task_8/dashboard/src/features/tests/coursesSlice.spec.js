@@ -1,5 +1,7 @@
 import mockAxios from 'jest-mock-axios';
 import coursesReducer, { fetchCourses } from '../courses/coursesSlice';
+
+jest.mock('axios', () => require('jest-mock-axios'));
 import { logout } from '../auth/authSlice';
 
 afterEach(() => {

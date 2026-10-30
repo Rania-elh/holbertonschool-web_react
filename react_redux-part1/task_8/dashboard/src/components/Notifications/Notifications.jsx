@@ -11,8 +11,15 @@ import NotificationItem from '../NotificationItem/NotificationItem.jsx';
 
 function Notifications() {
   const dispatch = useDispatch();
-  const notifications = useSelector((state) => state.notifications.notifications);
-  const displayDrawer = useSelector((state) => state.notifications.displayDrawer);
+  const selectedNotifications = useSelector(
+    (state) => state.notifications?.notifications
+  );
+  const notifications = Array.isArray(selectedNotifications)
+    ? selectedNotifications
+    : [];
+  const displayDrawer = useSelector(
+    (state) => state.notifications?.displayDrawer ?? true
+  );
 
   const handleDisplayDrawer = () => {
     dispatch(showDrawer());
