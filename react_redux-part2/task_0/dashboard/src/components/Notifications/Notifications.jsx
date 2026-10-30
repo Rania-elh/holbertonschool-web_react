@@ -38,12 +38,7 @@ function Notifications() {
       return;
     }
 
-    const visibleClass = css(styles.visible);
-    if (drawer.classList.contains(visibleClass)) {
-      drawer.classList.remove(visibleClass);
-    } else {
-      drawer.classList.add(visibleClass);
-    }
+    drawer.classList.toggle(css(styles.visible));
   };
 
   const markNotificationAsRead = (id) => {
@@ -58,7 +53,7 @@ function Notifications() {
 
       <div
         ref={DrawerRef}
-        className={`notification-items ${css(styles.notifications)} ${css(styles.visible)}`}
+        className={`notification-items ${css(styles.notifications)}`}
       >
         {notifications.length === 0 ? (
           <p>No new notification for now</p>

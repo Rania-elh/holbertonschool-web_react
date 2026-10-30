@@ -72,18 +72,18 @@ describe('Notifications component', () => {
     const visibleClass = visibleClassName();
     const stateBeforeToggle = store.getState();
 
-    expect(drawer.classList.contains(visibleClass)).toBe(true);
-
-    fireEvent.click(screen.getByRole('button', { name: /close/i }));
-
     expect(drawer.classList.contains(visibleClass)).toBe(false);
-    expect(drawer.isConnected).toBe(true);
-    expect(screen.getByText('New course available')).toBeInTheDocument();
-    expect(store.getState()).toBe(stateBeforeToggle);
 
     fireEvent.click(screen.getByText(/your notifications/i));
 
     expect(drawer.classList.contains(visibleClass)).toBe(true);
+    expect(drawer.isConnected).toBe(true);
+    expect(screen.getByText('New course available')).toBeInTheDocument();
+    expect(store.getState()).toBe(stateBeforeToggle);
+
+    fireEvent.click(screen.getByRole('button', { name: /close/i }));
+
+    expect(drawer.classList.contains(visibleClass)).toBe(false);
     expect(store.getState()).toBe(stateBeforeToggle);
   });
 

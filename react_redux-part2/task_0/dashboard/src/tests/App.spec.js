@@ -1,4 +1,4 @@
-import { render, screen, act, cleanup } from '@testing-library/react';
+import { render, screen, act, cleanup, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import mockAxios from 'jest-mock-axios';
@@ -86,6 +86,8 @@ describe('App component', () => {
     await act(async () => {
       mockAxios.mockResponse({ data: notifications });
     });
+
+    fireEvent.click(screen.getByText(/your notifications/i));
 
     expect(screen.getByText('New course available')).toBeInTheDocument();
     expect(screen.getByText('New resume available')).toBeInTheDocument();
