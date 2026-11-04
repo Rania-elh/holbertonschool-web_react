@@ -7,6 +7,8 @@ import notificationsReducer, {
 } from '../notifications/notificationsSlice';
 import { getLatestNotification } from '../../utils/utils';
 
+jest.mock('axios', () => require('jest-mock-axios'));
+
 afterEach(() => {
   mockAxios.reset();
 });

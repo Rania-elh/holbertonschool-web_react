@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ReactReduxContext, useDispatch, useSelector } from 'react-redux';
-import { logout } from '../../features/auth/authSlice';
+import { logout } from '../../features/auth/authSlice.js';
 import '../../../styles/Header.css';
 import logo from '../../assets/holberton-logo.jpg';
 

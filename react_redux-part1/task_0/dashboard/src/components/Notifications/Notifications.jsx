@@ -4,10 +4,10 @@ import {
   hideDrawer,
   markNotificationAsRead,
   showDrawer,
-} from '../../features/notifications/notificationsSlice';
+} from '../../features/notifications/notificationsSlice.js';
 import '../../../styles/Notifications.css';
 import closeIcon from '../../assets/close-icon.png';
-import NotificationItem from '../NotificationItem/NotificationItem';
+import NotificationItem from '../NotificationItem/NotificationItem.jsx';
 
 function NotificationsView({
   notifications = [],

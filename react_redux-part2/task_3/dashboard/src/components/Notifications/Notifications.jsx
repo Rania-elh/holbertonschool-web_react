@@ -60,13 +60,6 @@ function Notifications() {
     dispatch(markNotificationAsReadAction(id));
   };
 
-  const visibleNotifications = filteredNotifications.filter((notification) => {
-    if (notification?.context) {
-      return notification.context.isRead === false;
-    }
-    return notification?.isRead !== true;
-  });
-
   return (
     <Fragment>
       <div className="notification-title" onClick={handleToggleDrawer}>
@@ -82,7 +75,7 @@ function Notifications() {
         ) : (
           <Fragment>
             <p>
-              {visibleNotifications.length === 0
+              {filteredNotifications.length === 0
                 ? 'No new notification for now'
                 : 'Here is the list of notifications'}
             </p>
@@ -123,14 +116,14 @@ function Notifications() {
               </button>
             </div>
 
-            {visibleNotifications.length > 0 && (
+            {filteredNotifications.length > 0 && (
               <ul>
-                {visibleNotifications.map((notification) => (
+                {filteredNotifications.map((notification) => (
                   <NotificationItem
                     key={notification.id}
                     id={notification.id}
-                    type={notification.context?.type ?? notification.type}
-                    value={notification.value ?? notification.context?.value}
+                    type={notification.type}
+                    value={notification.value}
                     markAsRead={markNotificationAsRead}
                   />
                 ))}

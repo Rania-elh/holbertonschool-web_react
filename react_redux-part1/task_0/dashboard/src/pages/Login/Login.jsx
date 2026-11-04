@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import { ReactReduxContext, useDispatch } from 'react-redux';
-import { login } from '../../features/auth/authSlice';
+import { login } from '../../features/auth/authSlice.js';
 import '../../../styles/Login.css';
-import useLogin from '../../hooks/useLogin';
+import useLogin from '../../hooks/useLogin.jsx';
 
 function LoginForm({ onLogin }) {
   const {

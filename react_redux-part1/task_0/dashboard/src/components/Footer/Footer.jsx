@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ReactReduxContext, useSelector } from 'react-redux';
 import '../../../styles/Footer.css';
-import { getCurrentYear, getFooterCopy } from '../../utils/utils';
+import { getCurrentYear, getFooterCopy } from '../../utils/utils.js';
 
 function FooterView({ isLoggedIn }) {
   return (

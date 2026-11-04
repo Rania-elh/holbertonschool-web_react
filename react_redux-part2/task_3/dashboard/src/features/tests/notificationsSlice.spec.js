@@ -45,7 +45,7 @@ const apiNotifications = [
 const fetchedNotifications = apiNotifications
   .filter((notification) => notification.context.isRead === false)
   .map((notification) => ({
-    ...notification,
+    id: notification.id,
     type: notification.context.type,
     isRead: notification.context.isRead,
     value: notification.context.value,

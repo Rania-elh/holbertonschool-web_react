@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { ReactReduxContext, useSelector } from 'react-redux';
 import '../../../styles/CourseList.css';
-import CourseListRow from './CourseListRow/CourseListRow';
+import CourseListRow from './CourseListRow/CourseListRow.jsx';
 
 function CourseListView({ courses = [] }) {
   return (
